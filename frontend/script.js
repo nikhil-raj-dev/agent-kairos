@@ -25,6 +25,8 @@ async function sendMessage() {
     const inputArea = document.getElementById("inputArea");
     const title = document.getElementById("title");
 
+    const API_URL = "https://agent-kairos.onrender.com"; // for deploying on render.com
+
     if (firstQuery) {
         chat.classList.remove("hidden");
         sidebar.classList.remove("hidden");
@@ -62,7 +64,14 @@ async function sendMessage() {
 
     stepsDiv.innerHTML = "";
 
-    const res = await fetch("http://127.0.0.1:8000/chat", {
+    // const res = await fetch("http://127.0.0.1:8000/chat", {
+    //     method: "POST",
+    //     headers: {"Content-Type": "application/json"},
+    //     body: JSON.stringify({ query })
+    // });
+
+    // for deploying on render.com
+    const res = await fetch(`${API_URL}/chat`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ query })
