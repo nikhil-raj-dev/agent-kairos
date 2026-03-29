@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agent-Kairos</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar hidden">
+        <h3>Agent Thinking</h3>
+        <div id="steps"></div>
+    </div>
+
+    <!-- Main Area -->
+    <div class="main">
+
+        <div id="title" class="title-container">
+            <img src="../assets/title_image.png" alt="Agent-Kairos" class="title-image">
+        </div>
+
+        <div class="title-block">
+            <p id="title-text">Agent-Kairos</p>
+            <p class="tagline">Ask your data anything. Forecast, analyze, and visualize instantly.</p>
+        </div>
+
+        <div id="chat" class="chat hidden"></div>
+
+        <div id="inputArea" class="centered-input">
+            <input id="query" placeholder="Ask something..." />
+            <button id="sendBtn">Ask</button>
+        </div>
+
+        <p class="suggestions-label">Try asking:</p>
+        <div id="suggestions" class="suggestions">
+            <span onclick="fillQuery('Show last 3 months sales for product A')">Show last 3 months sales for product A</span>
+            <span onclick="fillQuery('Forecast next 30 days for product B')">Forecast next 30 days for product B</span>
+            <span onclick="fillQuery('Detect anomalies in product C')">Detect anomalies in product C</span>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
