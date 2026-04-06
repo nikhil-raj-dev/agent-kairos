@@ -1,11 +1,19 @@
 import plotly.graph_objects as go
+import pandas as pd
 
 
 def plot_sales_history(df):
+
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values("date")
+
     fig = go.Figure()
 
     fig.add_trace(
-        go.Scatter(x=df["date"], y=df["value"], mode="lines", name="Sales"
+        go.Line(x=df["date"].astype(str).tolist(), 
+                   y=df["value"].tolist(), 
+                   mode="lines", 
+                   name="Sales"
         )
     )
 
@@ -14,16 +22,25 @@ def plot_sales_history(df):
     return fig
 
 
-def plot_forecast(df, forecast_df):
+def plot_forecast(df, forecast_df, forecast_periods=30):
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values("date")
+
     fig = go.Figure()
 
     fig.add_trace(
-        go.Scatter(x=df["date"], y=df["value"], mode="lines", name="Actual"
+        go.Line(x=df["date"].astype(str).tolist(), 
+                   y=df["value"].tolist(), 
+                   mode="lines", 
+                   name="Actual"
         )
     )
 
     fig.add_trace(
-        go.Scatter(x=forecast_df["date"][-30:], y=forecast_df["forecast"][-30:], mode="lines", name="Forecast"
+        go.Line(x=forecast_df["date"][-forecast_periods:].astype(str).tolist(), 
+                   y=forecast_df["forecast"][-forecast_periods:].tolist(), 
+                   mode="lines", 
+                   name="Forecast"
         )
     )
 
@@ -33,18 +50,29 @@ def plot_forecast(df, forecast_df):
 
 
 def plot_anomalies(df):
+
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values("date")
+
     fig = go.Figure()
 
     normal = df[df["anomaly"] == False]
     anomaly = df[df["anomaly"] == True]
 
     fig.add_trace(
-        go.Scatter(x=normal["date"], y=normal["value"], mode="lines", name="Normal"
+        go.Scatter(x=df["date"].astype(str).tolist(), 
+                   y=df["value"].tolist(), 
+                   mode="lines", 
+                   name="Normal"
         )
     )
 
     fig.add_trace(
-        go.Scatter(x=anomaly["date"], y=anomaly["value"], mode="markers", name="Anomalies"
+        go.Scatter(x=anomaly["date"].astype(str).tolist(), 
+                   y=anomaly["value"].tolist(), 
+                   mode="markers", 
+                   name="Anomalies", 
+                   marker=dict(color="red", size=8)
         )
     )
 

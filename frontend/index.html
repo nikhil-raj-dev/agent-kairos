@@ -4,6 +4,7 @@
     <title>Agent-Kairos</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -20,11 +21,13 @@
     <div class="main">
 
         <div id="title" class="title-container">
-            <img src="assets/title_image.png" alt="Agent-Kairos" class="title-image">
+            <div class="title-glass title-hero">
+                <h1>Agent-Kairos</h1>
+            </div>
         </div>
 
         <div class="title-block">
-            <p id="title-text">Agent-Kairos</p>
+            <!-- <p id="title-text">Agent-Kairos</p> -->
             <p class="tagline">Ask your data anything. Forecast, analyze, and visualize instantly.</p>
         </div>
 
@@ -35,11 +38,11 @@
             <button id="sendBtn">Ask</button>
         </div>
 
-        <p class="suggestions-label">Try asking:</p>
+        <p id="suggestions-label">Try asking:</p>
         <div id="suggestions" class="suggestions">
-            <span onclick="fillQuery('Show last 3 months sales for product A')">Show last 3 months sales for product A</span>
-            <span onclick="fillQuery('Forecast next 30 days for product B')">Forecast next 30 days for product B</span>
-            <span onclick="fillQuery('Detect anomalies in product C')">Detect anomalies in product C</span>
+            <span onclick="fillQuery('Show last month sales for Electronics category')">Show last month sales for Electronics category</span>
+            <span onclick="fillQuery('Forecast 30 days for Stationary category')">Forecast 30 days for Stationary category</span>
+            <span onclick="fillQuery('Is there any anomalies in Toys category?')">Is there any anomalies in Toys category?</span>
         </div>
 
     </div>

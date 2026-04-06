@@ -78,6 +78,20 @@ tools = [
     }
 ]
 
+def build_result_summary(function_name, result):
+    if function_name == "detect_product_anomalies":
+        anomaly_rows = result[result["anomaly"] == True]
+        sample = anomaly_rows[["date", "value"]].head(5)
+
+        return (
+            f"Total rows: {len(result)}\n"
+            f"Anomaly count: {len(anomaly_rows)}\n"
+            f"Sample anomalies:\n{sample.to_string(index=False)}"
+        )
+
+    return str(result)
+
+
 
 function_mapping = {
     "get_data": get_data,
@@ -132,15 +146,17 @@ def run_agent(query: str):
             "tool_calls": message.tool_calls
         })
 
+        tool_result_summary = build_result_summary(function_name, result)
+
         chat_history.append({
             "role": "tool",
             "tool_call_id": tool_call.id,
-            "name": function_name,   # 🔥 VERY IMPORTANT
-            "content": str(result.head(10))
+            "name": function_name,
+            "content": tool_result_summary
         })
 
 
-        second_messages = llm_response_exaplanation_prompt(query, function_name, result)
+        second_messages = llm_response_exaplanation_prompt(query, function_name, build_result_summary(function_name, result))
 
         second_response = client.chat.completions.create(
             model="openai/gpt-oss-120b",

@@ -6,13 +6,15 @@ def detect_anomalies(df, column='value', threshold=3):
     
     mean = df[column].mean()
     std = df[column].std()
+
+    if std == 0 or pd.isna(std):
+        df["z_score"] = 0.0
+        df["anomaly"] = False
+        return df
     
     df['z_score'] = (df[column] - mean) / std
     df['anomaly'] = np.abs(df['z_score']) > threshold
     
-    anomalies_df = df[df['anomaly']].drop(columns=['z_score'])
-
-    print(mean, std)
-    print(df)
     
-    return anomalies_df
+    
+    return df

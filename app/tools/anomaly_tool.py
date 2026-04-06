@@ -8,6 +8,7 @@ def detect_product_anomalies(product_name : str):
     df = get_product_sales(product_name)
     df = prepare_timeseries(df)
     df = impute_data(df)
+    df = prepare_timeseries(df)
 
     anomaly_df = detect_anomalies(df)
 

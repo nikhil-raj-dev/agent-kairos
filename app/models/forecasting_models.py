@@ -14,7 +14,7 @@ def generate_forecast(df, periods=30):
     df = df.sort_values('date')
     prophet_df = prepare_data_for_prophet(df)
     
-    model = Prophet()
+    model = Prophet(weekly_seasonality=True, daily_seasonality=False, yearly_seasonality=True, seasonality_mode='additive')
     model.fit(prophet_df)
 
     future = model.make_future_dataframe(periods=periods)

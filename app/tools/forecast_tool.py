@@ -6,7 +6,6 @@ from app.models.forecasting_models import generate_forecast
 def forecast_product(product_name : str, forecast_periods : int = 30):
     
     df = get_product_sales(product_name)
-    print(df.head())
     df = impute_data(df)
     df = prepare_timeseries(df)
 

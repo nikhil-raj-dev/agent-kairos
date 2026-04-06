@@ -10,7 +10,7 @@ async function showLogs(logs, stepsDiv) {
         stepEl.innerText = "→ " + log;
         stepsDiv.appendChild(stepEl);
 
-        await delay(400);  // 🔥 animation
+        await delay(400);
     }
 }
 
@@ -24,6 +24,7 @@ async function sendMessage() {
     const stepsDiv = document.getElementById("steps");
     const inputArea = document.getElementById("inputArea");
     const title = document.getElementById("title");
+    const titleContainer = document.getElementById("title");
 
     const API_URL = "https://agent-kairos.onrender.com"; // for deploying on render.com
 
@@ -32,16 +33,13 @@ async function sendMessage() {
         sidebar.classList.remove("hidden");
 
         document.getElementById("suggestions").style.display = "none";
+        document.getElementById("suggestions-label").style.display = "none";
         document.getElementsByClassName("title-block")[0].style.display = "none";
-        document.getElementsByClassName("suggestions-label")[0].style.display = "none";
 
         inputArea.classList.remove("centered-input");
         inputArea.classList.add("bottom-input");
 
-        title.style.marginTop = "10px";
-        title.querySelector("img").style.maxWidth = "230px";
-        title.querySelector("img").style.padding = "5px";
-        document.getElementsByClassName("main")[0].style.height = "100%";
+        titleContainer.classList.add("compact");
 
 
         document.querySelector(".main").classList.add("chat-active");
@@ -119,7 +117,7 @@ async function streamText(container, text) {
     let currentText = "";
 
     const div = document.createElement("div");
-    div.style.marginTop = "5px";   // spacing under Agent label
+    div.style.marginTop = "5px";
     container.appendChild(div);
 
     while (i < text.length) {

@@ -25,8 +25,17 @@ def get_product_sales(product_name):
 
 
 def get_last_n_days_sales(product_name, n_days):
-    sql_query = f"""Select date, value from sales_data where product = '{product_name}' order by date desc limit {n_days}"""
-
+    sql_query = f"""
+        SELECT date, value
+        FROM (
+            SELECT date, value
+            FROM sales_data
+            WHERE product = '{product_name}'
+            ORDER BY date DESC
+            LIMIT {n_days}
+        ) recent
+        ORDER BY date ASC
+    """
     with engine.connect() as connection:
         df = pd.read_sql(sql_query, connection)
 

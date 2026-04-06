@@ -12,7 +12,7 @@ def build_system_prompt(products):
     """
 
 
-def llm_response_exaplanation_prompt(query, function_name, result):
+def llm_response_exaplanation_prompt(query, function_name, result_summary):
     second_messages = [
         {
             "role": "system",
@@ -36,7 +36,7 @@ def llm_response_exaplanation_prompt(query, function_name, result):
         },
         {
             "role": "user",
-            "content": f"Here is the result:\n{str(result.head(10))}\n\nExplain this."
+            "content": f"Here is the result:\n{result_summary}\n\nExplain this."
         }
     ]
     return second_messages

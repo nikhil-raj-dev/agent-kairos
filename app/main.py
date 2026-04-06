@@ -36,21 +36,35 @@ def chat_endpoint(request: Query):
     chart_json = None
 
     if tool_used == "forecast_product":
-        product = tool_args.get("product_name")
-        print(f"###################################################: {product}")
-        df = get_data(product)
-        forecast_df = forecast_product(product, 30)
-        fig = plot_forecast(df, forecast_df)
+        try:
+            product = tool_args.get("product_name")
+            forecast_periods = tool_args.get("forecast_periods", 30)
+        except KeyError:
+            return {"error": "Product name not provided"}
+
+        df = get_data(product, 730)
+        print(df.shape)
+        forecast_df = forecast_product(product, forecast_periods)
+        fig = plot_forecast(df, forecast_df, forecast_periods)
         chart_json = fig.to_json()
 
     elif tool_used == "get_data":
-        product = tool_args.get("product_name")
-        df = get_data(product)
+        try:
+            product = tool_args.get("product_name")
+            n_days = tool_args.get("n_days", 90)
+        except KeyError:
+            return {"error": "Product name not provided"}
+
+        df = get_data(product, n_days)
         fig = plot_sales_history(df)
         chart_json = fig.to_json()
 
     elif tool_used == "detect_product_anomalies":
-        product = tool_args.get("product_name")
+        try:
+            product = tool_args.get("product_name")
+        except KeyError:
+            return {"error": "Product name not provided"}
+
         df = detect_product_anomalies(product)
         fig = plot_anomalies(df)
         chart_json = fig.to_json()
